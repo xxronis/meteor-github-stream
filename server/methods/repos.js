@@ -45,6 +45,7 @@ Meteor.methods({
           });
         } else {
           Repos.update(doc._id, doc, function (error) {
+            console.log(doc.title + 'updated!')
             if (error) {
               console.log(error);
             }
