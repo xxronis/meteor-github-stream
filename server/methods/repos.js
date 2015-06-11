@@ -13,19 +13,19 @@ Meteor.methods({
     var plucked = _.pluck(CollectionRepos, 'title');
 
 
-    console.log(plucked);
+    //console.log(plucked);
     try {
       var response = HTTP.get('https://api.github.com/users/' + query + '/repos',
         {
           headers: {'user-agent': 'node.js'}
           ,
-          auth: "xxronis:enosis21@git"
+          auth: "xxronis:#$Q#Q$Q$@"
         }
       );
       //console.log(response)
 
       _.each(response.data, function (item) {
-        console.log(item.name + ' repository fetched');
+        console.log(item.name + ' repository fetched' + item.pushed_at);
         var doc = {
           owner: item.owner,
           thumb: item.owner.avatar_url,
@@ -44,8 +44,7 @@ Meteor.methods({
             }
           });
         } else {
-          Repos.update(doc._id, doc, function (error) {
-            console.log(doc.title + 'updated!')
+          Repos.update(doc._id, {$set: {pushed_at: doc.pushed_at}}, function (error) {
             if (error) {
               console.log(error);
             }
