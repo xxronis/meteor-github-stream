@@ -1,9 +1,9 @@
-Items = new Mongo.Collection('items');
+Repos = new Mongo.Collection('repos');
 
-Items.helpers({
+Repos.helpers({
 
 });
 
-Items.before.insert(function (userId, doc) {
+Repos.before.insert(function (userId, doc) {
   doc.createdAt = moment().toDate();
 });
