@@ -24,3 +24,5 @@ aldeed:collection2
 aldeed:autoform
 mrt:accounts-ui-bootstrap-3
 accounts-github
+percolate:synced-cron
+http
