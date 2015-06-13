@@ -10,22 +10,21 @@ Meteor.methods({
     var docs = [];
     var CollectionRepos = Repos.find().fetch();
 
-    var plucked = _.pluck(CollectionRepos, 'title');
-
+    var plucked = _.pluck(CollectionRepos, 'title'),
+      auth = Meteor.settings.default_api_account.account.user + ':' + Meteor.settings.default_api_account.account.pass;
 
     //console.log(plucked);
+    //console.log(Meteor.settings);
     try {
-      var response = HTTP.get('https://api.github.com/users/' + query + '/repos',
+      var response = HTTP.get('https://api.github.com/users/' + Meteor.settings.default_api_account.account.user + '/repos', //+ query +
         {
-          headers: {'user-agent': 'node.js'}
-          ,
-          auth: "xxronis:#$Q#Q$Q$@"
+          headers: {'user-agent': 'node.js'},
+          auth: auth
         }
       );
-      //console.log(response)
 
       _.each(response.data, function (item) {
-        console.log(item.name + ' repository fetched' + item.pushed_at);
+        //console.log(item.name + ' repository fetched' + item.pushed_at);
         var doc = {
           owner: item.owner,
           thumb: item.owner.avatar_url,
@@ -35,9 +34,7 @@ Meteor.methods({
           pushed_at: item.pushed_at
         };
         var checkStop = Repos.findOne({title: item.name});
-        //console.log('find +++' + Repos.findOne({"name": item.name}));
         if (!checkStop) {
-          //Repos.insert(doc);
           Repos.insert(doc, function (error) {
             if (error) {
               console.log(error);
@@ -56,11 +53,8 @@ Meteor.methods({
 
       // Remove from Collection if not exist in service.Sync.
       var pluckedDocs = _.pluck(docs, 'title');
-      console.log(pluckedDocs);
       _.each(plucked, function (title) {
-        //console.log(title + ' plucked');
         if (!exists(pluckedDocs, title)) {
-          console.log('removing ' + title);
           var toRemove = Repos.findOne({title: title});
           Repos.remove(toRemove._id, function (error) {
             if (error) {
