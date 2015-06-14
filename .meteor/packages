@@ -22,7 +22,8 @@ iron:router@1.0.0
 yasinuslu:blaze-meta
 aldeed:collection2
 aldeed:autoform
-mrt:accounts-ui-bootstrap-3
 accounts-github
 percolate:synced-cron
 http
+service-configuration
+ian:accounts-ui-bootstrap-3
