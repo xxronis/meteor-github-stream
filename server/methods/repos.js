@@ -41,7 +41,7 @@ Meteor.methods({
             }
           });
         } else {
-          Repos.update(doc._id, {$set: {pushed_at: doc.pushed_at}}, function (error) {
+          Repos.update(checkStop._id, doc, function (error) {
             if (error) {
               console.log(error);
             }
