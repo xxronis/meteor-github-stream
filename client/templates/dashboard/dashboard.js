@@ -1,5 +1,9 @@
 Template.dashboard.rendered = function() {
-
+  //this.$('.repos').fadeIn();
+};
+Template.repo.rendered = function() {
+  //this.$('.list-group-item').fadeOut(3000);
+  console.log(Blaze.getData(this.$('.list-group-item')[0]));
 };
 Template.dashboard.events({
   'submit form': function(event, template) {
